@@ -1,0 +1,29 @@
+iwr -useb https://openclaw.ai/install.ps1 | iex
+
+Set-ExecutionPolicy RemoteSigned
+
+下载一个git
+
+# 强制 Git 使用 HTTPS 协议访问 GitHub，而不是 SSH
+git config --global url."https://github.com/".insteadOf ssh://git@github.com/
+git config --global url."https://github.com/".insteadOf git@github.com:
+
+# 然后重新运行安装
+iwr -useb https://openclaw.ai/install.ps1 | iex
+
+
+卸载重新安装
+# 卸载现有残留
+npm uninstall -g openclaw
+
+# 删除所有相关目录
+Remove-Item -Recurse -Force "$env:USERPROFILE\.openclaw" -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force "$env:LOCALAPPDATA\openclaw" -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force "$env:APPDATA\openclaw" -ErrorAction SilentlyContinue
+
+# 清理 npm 缓存
+npm cache clean --force
+
+openclaw dashboard
+
+openclaw gateway
